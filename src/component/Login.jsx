@@ -7,16 +7,17 @@ function Login() {
 
 const [username,setUsername]= useState('');
 const [password,setPassword] = useState('');
-
+const [message,setMessage] = useState('')
 async function login(){
-     const user = await axios.post('https://instagram-backend-eogx.onrender.com/login',{username:username,password:password});
-     console.log(user,'user');
-     Swal.fire(`${user.data.ft}`,`${user.data.message}`,`${user.data.lt}`)
-    if(user.data.message === 'log in successfully'){
-        setTimeout(()=>{
-            window.location.href = '/message'
-          },1000)
-    }
+     const {data} = await axios.post('https://instagram-backend-eogx.onrender.com/login',{username:username,password:password});
+     setMessage(data.message)
+
+    //  Swal.fire(`${user.data.ft}`,`${user.data.message}`,`${user.data.lt}`)
+    // if(user.data.message === 'log in successfully'){
+    //     setTimeout(()=>{
+    //         window.location.href = '/message'
+    //       },1000)
+    // }
 }
 
   return (
@@ -35,9 +36,12 @@ async function login(){
               <div className="form-wrap">
                   <div className="input-box">
                     <input type="text" id="name" placeholder="Phone number, username, or email" onChange={(e)=>setUsername(e.target.value)}      />
+                  <p style={{color:'red'}}>{ message && message}</p>
                   </div>  
                   <div className="input-box">
                     <input type="password"  id="password" placeholder="Password"  onChange={(e)=>setPassword(e.target.value)}  />
+                    <p style={{color:'red'}}>{message && message}</p>
+                  
                   </div>  
                   <span className="button-box">
                     <button className="btn" onClick={login} >Log in</button>
@@ -68,7 +72,7 @@ async function login(){
     <footer className="footer" role="contentinfo">
       <div className="footer-container">
         <nav className="footer-nav" role="navigation">
-          <ul>
+          {/* <ul>
             <li><a href>About Us</a></li>
             <li><a href>Support</a></li>
             <li><a href>Blog</a></li>
@@ -86,9 +90,9 @@ async function login(){
                 </select>
               </span>
             </li>
-          </ul>
+          </ul> */}
         </nav>
-        <span className="footer-logo">© 2018 Instagram</span>
+        {/* <span className="footer-logo">© 2018 Instagram</span> */}
       </div> {/* Footer container end */}
     </footer>
   </section>
